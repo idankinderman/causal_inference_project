@@ -1,0 +1,1048 @@
+R00001.00    [CASEID]                                       Survey Year: 1979
+  PRIMARY VARIABLE
+
+             IDENTIFICATION CODE
+ 
+ORIGINAL QUESTION NAME: CASEID
+ 
+NOTE: THIS NUMBER WAS ASSIGNED ACCORDING TO THE RECORD NUMBER OF EACH RESPONDENT
+ON THE TAPE. THE FIRST RESPONDENT WAS ASSIGNED ID#1, THE SECOND WAS ASSIGNED 
+ID#2, ETC.
+ 
+ACTUAL NUMBER
+ 
+UNIVERSE: All
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:          12686        Mean:              6343.5
+ 
+Lead In: None.
+Default Next Question: R00001.49
+--------------------------------------------------------------------------------
+R00006.00    [FAM-1B]                                       Survey Year: 1979
+  PRIMARY VARIABLE
+
+             AGE OF R
+ 
+ORIGINAL QUESTION NAME: S01Q01B
+ 
+AND THAT MAKES YOU (R'S AGE ON HOUSEHOLD ENUMERATION). IS THAT CORRECT ? (IF 
+NECESSARY CORRECT HOUSEHOLD ENUMERATION.)
+ 
+ACTUAL AGE
+ 
+UNIVERSE: All
+ 
+     950          14
+    1563          15
+    1561          16
+    1508          17
+    1634          18
+    1677          19
+    1666          20
+    1690          21
+     437          22
+  -------
+   12686
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:             14        Max:             22        Mean:                17.9
+ 
+Lead In: R00005.00[Default]
+Default Next Question: R00007.00
+--------------------------------------------------------------------------------
+R00018.00    [FAM-6]                                        Survey Year: 1979
+  PRIMARY VARIABLE
+
+             AREA OF RESIDENCE AT AGE 14 URBAN/RURAL?
+ 
+ORIGINAL QUESTION NAME: S01Q06
+ 
+(HAND CARD A.) WHICH OF THE CATEGORIES ON THIS CARD BEST DESCRIBES WHERE YOU 
+(ARE/WERE) LIVING (WHEN YOU WERE 14 YEARS OLD)?
+ 
+UNIVERSE: All
+ 
+    9970       1 IN TOWN OR CITY
+    2016       2 IN COUNTRY-NOT FARM
+     660       3 ON FARM OR RANCH
+  -------
+   12646
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+Invalid Skip(-3)      40
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:              3        Mean:                1.26
+ 
+Lead In: R00014.00[Default] R00016.10[Default]
+Default Next Question: R00019.00
+--------------------------------------------------------------------------------
+R00088.00    [FAM-27C]                                      Survey Year: 1979
+  PRIMARY VARIABLE
+
+             DO R'S MOTHER AND FATHER LIVE IN SAME HOUSEHOLD?
+ 
+ORIGINAL QUESTION NAME: S01Q27C
+ 
+DO YOUR MOTHER AND FATHER LIVE IN THE SAME HOUSEHOLD?
+ 
+UNIVERSE: R with version C of HH record card
+ 
+    2000       1 YES
+     931       0 NO
+  -------
+    2931
+ 
+Refusal(-1)            1
+Don't Know(-2)         0
+Invalid Skip(-3)     239
+TOTAL =========>    3171   VALID SKIP(-4)    9515     NON-INTERVIEW(-5)       0
+ 
+Min:              0        Max:              1        Mean:                 .68
+ 
+Lead In: R00087.00[Default]
+Default Next Question: R00090.00
+--------------------------------------------------------------------------------
+R00091.00    [FAM-28A]                                      Survey Year: 1979
+  PRIMARY VARIABLE
+
+             NUMBER OF SIBLINGS
+ 
+ORIGINAL QUESTION NAME: S01Q28A
+ 
+SEE R(90.)
+ 
+ACTUAL NUMBER
+ 
+UNIVERSE: All
+ 
+     362           0
+    1611           1
+    2530           2
+    2412           3
+    1783           4
+    1198           5
+     933           6
+     634           7
+     421           8
+     289           9
+     178          10
+     116          11
+      67          12
+      64          13
+      27          14
+      11          15
+      32          16 TO 99999: 16+
+  -------
+   12668
+ 
+Refusal(-1)            1
+Don't Know(-2)         3
+Invalid Skip(-3)      14
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              0        Max:             29        Mean:                3.85
+ 
+Lead In: R00090.00[Default]
+Default Next Question: R00092.00
+--------------------------------------------------------------------------------
+R00096.00    [FAM-30_1]                                     Survey Year: 1979
+  PRIMARY VARIABLE
+
+             1ST OR ONLY RACIAL/ETHNIC ORIGIN
+ 
+ORIGINAL QUESTION NAME: S01Q30A
+ 
+(HAND CARD C.) WHAT IS YOUR ORIGIN OR DESCENT?
+ 
+NOTE: USERS SHOULD BE AWARE THAT FREQUENCIES FOR "INDIAN-AMERICAN OR NATIVE 
+AMERICAN" MAY HAVE BEEN OVERSTATED IN 1979.
+ 
+UNIVERSE: All
+ 
+      52       0 NONE
+    3078       1 BLACK
+      25       2 CHINESE
+    2463       3 ENGLISH
+      53       4 FILIPINO
+     647       5 FRENCH
+    1788       6 GERMAN
+      36       7 GREEK
+      22       8 HAWAIIAN, P.I.
+     507       9 INDIAN-AMERICAN OR NATIVE AMERICAN
+      24      10 ASIAN INDIAN
+     617      11 IRISH
+     278      12 ITALIAN
+      10      13 JAPANESE
+       7      14 KOREAN
+     112      15 CUBAN
+      66      16 CHICANO
+     375      17 MEXICAN
+     671      18 MEXICAN-AMER
+     308      19 PUERTO RICAN
+     108      20 OTHER HISPANIC
+      67      21 OTHER SPANISH
+     141      22 POLISH
+      72      23 PORTUGUESE
+      31      24 RUSSIAN
+      47      25 SCOTTISH
+       1      26 VIETNAMESE
+      12      27 WELSH
+     369      28 OTHER
+     589      29 AMERICAN
+  -------
+   12576
+ 
+Refusal(-1)            1
+Don't Know(-2)        98
+Invalid Skip(-3)      11
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              0        Max:             29        Mean:                8.37
+ 
+Lead In: R00095.00[Default]
+Default Next Question: R00097.00
+--------------------------------------------------------------------------------
+R00103.00    [R_REL-1_COL]                                  Survey Year: 1979
+  PRIMARY VARIABLE
+
+             IN WHAT RELIGION WAS R RAISED? 79 INT (COLLAPSED OTHER-SPECIFY)
+ 
+ORIGINAL QUESTION NAME: S01Q32
+ 
+AND NOW A FEW QUESTIONS ABOUT YOUR RELIGIOUS BACKGROUND. FIRST, IN WHAT RELIGION
+WERE YOU RAISED? (IF 'PROTESTANT' OR 'CHRISTIAN,' PROBE: WHAT DENOMINATION WAS 
+THAT, IF ANY?)
+ 
+UNIVERSE: All
+ 
+     532       0 NONE, NO RELIGION
+     617       1 PROTESTANT
+    3600       2 BAPTIST
+     203       3 EPISCOPALIAN
+     674       4 LUTHERAN
+     978       5 METHODIST
+     329       6 PRESBYTERIAN
+    4273       7 ROMAN CATHOLIC
+     117       8 JEWISH
+    1307       9 OTHER
+  -------
+   12630
+ 
+Refusal(-1)            2
+Don't Know(-2)        38
+Invalid Skip(-3)      16
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              0        Max:              9        Mean:                 4.8
+ 
+Lead In: R00102.00[Default]
+Default Next Question: R00103.10
+--------------------------------------------------------------------------------
+R00104.00    [R_REL-2_COL]                                  Survey Year: 1979
+  PRIMARY VARIABLE
+
+             PRESENT RELIGIOUS AFFILIATION 79 INT (COLLAPSED OTHER-SPECIFY)
+ 
+ORIGINAL QUESTION NAME: S01Q33
+ 
+WHAT IS YOUR PRESENT RELIGION, IF ANY? (IF 'PROTESTANT' OR 'CHRISTIAN' PROBE: 
+WHAT DENOMINATION IS THAT, IF ANY?)
+ 
+UNIVERSE: All
+ 
+    1487       0 NONE, NO RELIGION
+     656       1 PROTESTANT
+    3211       2 BAPTIST
+     171       3 EPISCOPALIAN
+     601       4 LUTHERAN
+     850       5 METHODIST
+     277       6 PRESBYTERIAN
+    3899       7 ROMAN CATHOLIC
+     110       8 JEWISH
+    1371       9 OTHER
+  -------
+   12633
+ 
+Refusal(-1)            2
+Don't Know(-2)        18
+Invalid Skip(-3)      33
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              0        Max:              9        Mean:                4.47
+ 
+Lead In: R00103.10[Default]
+Default Next Question: R00104.10
+--------------------------------------------------------------------------------
+R00105.00    [R_REL-3]                                      Survey Year: 1979
+  PRIMARY VARIABLE
+
+             FREQUENCY OF R'S RELIGIOUS ATTENDANCE
+ 
+ORIGINAL QUESTION NAME: S01Q34
+ 
+(HAND CARD D.) IN THE PAST YEAR, ABOUT HOW OFTEN HAVE YOU ATTENDED RELIGIOUS 
+SERVICES--MORE THAN ONCE A WEEK, ABOUT ONCE A WEEK, TWO OR THREE TIMES A MONTH, 
+ABOUT ONCE A MONTH, SEVERAL TIMES OR LESS DURING THE YEAR, OR NOT AT ALL?
+ 
+UNIVERSE: All
+ 
+    2543       1 NOT AT ALL
+    3501       2 INFREQUENTLY
+    1175       3 ONCE PER MONTH
+    1537       4 2-3 TIMES PER MONTH
+    2728       5 ONCE PER WEEK
+    1185       6 > ONCE PER WEEK
+  -------
+   12669
+ 
+Refusal(-1)            3
+Don't Know(-2)         0
+Invalid Skip(-3)      14
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:              6        Mean:                3.15
+ 
+Lead In: R00104.10[Default]
+Default Next Question: R00106.00
+--------------------------------------------------------------------------------
+R00106.00    [MAR-1]                                        Survey Year: 1979
+  PRIMARY VARIABLE
+
+             MARITAL STATUS
+ 
+ORIGINAL QUESTION NAME: S02Q01
+ 
+ARE YOU PRESENTLY MARRIED, WIDOWED, DIVORCED, SEPARATED, OR HAVE YOU NEVER BEEN 
+MARRIED?
+ 
+UNIVERSE: All
+ 
+    1352       1 PRESENTLY MARRIED
+       1       2 WIDOWED
+      84       3 DIVORCED
+     130       4 SEPARATED
+   11117       5 NEVER MARRIED-ANNUL
+  -------
+   12684
+ 
+Refusal(-1)            1
+Don't Know(-2)         0
+Invalid Skip(-3)       1
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:              5        Mean:                4.55
+ 
+Lead In: R00105.00[Default]
+Default Next Question: R00107.00
+--------------------------------------------------------------------------------
+R00132.00    [FER-1B]                                       Survey Year: 1979
+  PRIMARY VARIABLE
+
+             NUMBER OF CHILDREN DESIRED BY R
+ 
+ORIGINAL QUESTION NAME: S03Q01B
+ 
+HOW MANY CHILDREN DO YOU WANT TO HAVE?
+ 
+ACTUAL NUMBER
+ 
+UNIVERSE: All
+ 
+     963           0
+     836           1
+    5798           2
+    2472           3
+    1685           4
+     388           5
+     222           6
+      62           7
+      69           8
+      15           9
+      35          10
+       7          11
+      20          12
+       2          13
+       2          14
+       6          15
+       2          16 TO 99999: 16+
+  -------
+   12584
+ 
+Refusal(-1)            3
+Don't Know(-2)        61
+Invalid Skip(-3)      38
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              0        Max:             25        Mean:                2.53
+ 
+Lead In: R00131.00[Default]
+Default Next Question: R00133.00
+--------------------------------------------------------------------------------
+R00134.00    [FER-2A]                                       Survey Year: 1979
+  PRIMARY VARIABLE
+
+             NUMBER OF CHILDREN R HAS HAD
+ 
+ORIGINAL QUESTION NAME: S03Q02A
+ 
+HOW MANY CHILDREN, ALTOGETHER, HAVE (YOU EVER GIVEN BIRTH TO/YOU EVER HAD) AT 
+ANY TIME, NOT COUNTING BABIES WHO WERE DEAD AT BIRTH?
+ 
+ACTUAL NUMBER
+ 
+UNIVERSE: R has had children
+ 
+    1061           1
+     275           2
+      51           3
+       9           4
+       4           5
+  -------
+    1400
+ 
+Refusal(-1)            3
+Don't Know(-2)         3
+Invalid Skip(-3)      27
+TOTAL =========>    1433   VALID SKIP(-4)   11253     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:              5        Mean:                 1.3
+ 
+Lead In: R00133.00[Default]
+Default Next Question: R00135.00
+--------------------------------------------------------------------------------
+R00153.00    [FER-3]                                        Survey Year: 1979
+  PRIMARY VARIABLE
+
+             TOTAL NUMBER OF CHILDREN R EXPECTS TO HAVE
+ 
+ORIGINAL QUESTION NAME: S03Q03
+ 
+ALTOGETHER, HOW MANY (MORE) CHILDREN DO YOU EXPECT TO HAVE?
+ 
+ACTUAL NUMBER
+ 
+UNIVERSE: All
+ 
+    1277           0
+    1272           1
+    5257           2
+    2437           3
+    1496           4
+     403           5
+     186           6
+      46           7
+      39           8
+       5           9
+      21          10
+       6          11
+      10          12
+       1          14
+       2          15
+       2          16 TO 99999: 16+
+  -------
+   12460
+ 
+Refusal(-1)            3
+Don't Know(-2)       141
+Invalid Skip(-3)      82
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              0        Max:             20        Mean:                2.36
+ 
+Lead In: R00149.00[Default]
+Default Next Question: R00154.00
+--------------------------------------------------------------------------------
+R01451.00    [Q11-5A]                                       Survey Year: 1979
+  PRIMARY VARIABLE
+
+             INT CHECK 79 - DOES R HAVE HEALTH LIMITATIONS - ITEMS 2A OR 2B 
+             "YES"?
+ 
+ORIGINAL QUESTION NAME: S16Q03
+ 
+I, SEE QS 2A & B. IS ANY 'YES' ANSWER CODED IN THESE QUESTIONS?
+ 
+UNIVERSE: R had job last week OR health would not prevent working at job for pay
+ 
+     613       1 YES
+   11852       0 NO
+  -------
+   12465
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+Invalid Skip(-3)       2
+TOTAL =========>   12467   VALID SKIP(-4)     219     NON-INTERVIEW(-5)       0
+ 
+Min:              0        Max:              1        Mean:                 .05
+ 
+Lead In: R01450.00[Default]
+Default Next Question: R01452.00
+--------------------------------------------------------------------------------
+R01461.00    [HEALTH-8A]                                    Survey Year: 1979
+  PRIMARY VARIABLE
+
+             INT CHECK 79 - CAUSE OF MAIN HEALTH CONDITION CAUSING WORK 
+             LIMITATIONS
+ 
+ORIGINAL QUESTION NAME: S16Q08A
+ 
+EXAMINE 'NAME OF CONDITION' AND BOX B AND CIRCLE APPROPRIATE CODE.
+ 
+UNIVERSE: R health would cause work limitations OR would prevent working at a 
+job for pay currently
+ 
+     179       1 ACCIDENT-INJURY
+      78       2 IN BOX B
+     372       3 NEITHER
+     147       4 NORMAL PREGNANCY
+       7       5 NORMAL DELIVERY
+       1       6 VASECTOMY-T.L.
+  -------
+     784
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+Invalid Skip(-3)       4
+TOTAL =========>     788   VALID SKIP(-4)   11898     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:              6        Mean:                2.65
+ 
+Lead In: R01460.00[Default]
+Default Next Question: R01462.00
+--------------------------------------------------------------------------------
+R01498.00    [OTHER-3G]                                     Survey Year: 1979
+  PRIMARY VARIABLE
+
+             ATTITUDE OF INFLUENTIAL PERSON TO R'S DECISION TO HAVE NO CHILDREN
+ 
+ORIGINAL QUESTION NAME: S17Q03G
+ 
+SEE R(1492.) YOU DECIDED NEVER TO HAVE CHILDREN
+ 
+UNIVERSE: R is >= 14 & <= 17; has chosen the most influential person in their 
+life
+ 
+     983       1 STRONGLY DISAPPROVE
+    2262       2 SOMEWHAT DISAPPROVE
+    1334       3 SOMEWHAT APPROVE
+     471       4 STRONGLY APPROVE
+  -------
+    5050
+ 
+Refusal(-1)            0
+Don't Know(-2)       272
+Invalid Skip(-3)      89
+TOTAL =========>    5411   VALID SKIP(-4)    7275     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:              4        Mean:                2.26
+ 
+Lead In: R01497.00[Default]
+Default Next Question: R01499.00
+--------------------------------------------------------------------------------
+R01499.00    [OTHER-3H]                                     Survey Year: 1979
+  PRIMARY VARIABLE
+
+             ATTITUDE TOWARD R'S DECISION TO PURSUE CAREER, DELAY FAMILY
+ 
+ORIGINAL QUESTION NAME: S17Q03H
+ 
+SEE R(1492.) ASK FEMALE R'S ONLY: YOU DECIDED TO PURSUE A FULL TIME
+CAREER AND DELAY STARTING A FAMILY
+ 
+UNIVERSE: R is >= 14 & <= 17; female; has chosen the most influential person in 
+their life
+ 
+     154       1 STRONGLY DISAPPROVE
+     464       2 SOMEWHAT DISAPPROVE
+    1149       3 SOMEWHAT APPROVE
+     781       4 STRONGLY APPROVE
+  -------
+    2548
+ 
+Refusal(-1)            0
+Don't Know(-2)        62
+Invalid Skip(-3)      61
+TOTAL =========>    2671   VALID SKIP(-4)   10015     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:              4        Mean:                   3
+ 
+Lead In: R01498.00[Default]
+Default Next Question: R01500.00
+--------------------------------------------------------------------------------
+R01736.00    [SAMPLE_ID]                                    Survey Year: 1979
+  PRIMARY VARIABLE
+
+             SAMPLE IDENTIFICATION CODE
+ 
+ORIGINAL QUESTION NAME: S24Q01
+ 
+UNIVERSE: Entire Sample
+ 
+    2236       1 CROSS MALE WHITE
+     203       2 CROSS MALE WH. POOR
+     346       3 CROSS MALE BLACK
+     218       4 CROSS MALE HISPANIC
+    2279       5 CROSS FEMALE WHITE
+     198       6 CROSS FEMALE WH POOR
+     405       7 CROSS FEMALE BLACK
+     226       8 CROSS FEMALE HISPANIC
+     742       9 SUP MALE WH POOR
+    1105      10 SUP MALE BLACK
+     729      11 SUP MALE HISPANIC
+     901      12 SUP FEM WH POOR
+    1067      13 SUP FEMALE BLACK
+     751      14 SUP FEMALE HISPANIC
+     609      15 MIL MALE WHITE
+     162      16 MIL MALE BLACK
+      53      17 MIL MALE HISPANIC
+     342      18 MIL FEMALE WHITE
+      89      19 MIL FEMALE BLACK
+      25      20 MIL FEMALE HISPANIC
+  -------
+   12686
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:             20        Mean:                8.17
+ 
+
+
+NOTE: MARCH 1, 1986  NORC
+ 
+SEX CODE CHANGED ON 42 CASES
+ 
+Lead In: R01735.19[Default]
+Default Next Question: R01737.00
+--------------------------------------------------------------------------------
+R02147.00    [SAMPLE_RACE]                                  Survey Year: 78SCRN
+  PRIMARY VARIABLE
+
+             R'S RACIAL/ETHNIC COHORT FROM SCREENER
+ 
+UNIVERSE: Entire Sample
+ 
+    2002       1 HISPANIC
+    3174       2 BLACK
+    7510       3 NON-BLACK, NON-HISPANIC
+  -------
+   12686
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:              3        Mean:                2.43
+ 
+
+
+NOTE: AUGUST 26, 1980  DENNIS GREY
+ 
+DESCRIPTION:
+COHORT=3;
+IF R(1736.)=4 ! R(1736.)=8 ! R(1736.)=11 ! R(1736.)=14 THEN COHORT=1;
+IF R(1736.)=17 ! R(1736.)=20 THEN COHORT=1;
+IF R(1736.)=3 ! R(1736.)=7 ! R(1736.)=10 ! R(1736.)=13 THEN COHORT=2;
+IF R(1736.)=16 ! R(1736.)=19 THEN COHORT=2;
+R(2147.)=COHORT;
+ 
+Lead In: R02146.00[Default]
+Default Next Question: R02148.00
+--------------------------------------------------------------------------------
+R02148.00    [SAMPLE_SEX]                                   Survey Year: 1979
+  PRIMARY VARIABLE
+
+             SEX OF R
+ 
+UNIVERSE: Entire sample
+ 
+    6403       1 MALE
+    6283       2 FEMALE
+  -------
+   12686
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:              2        Mean:                 1.5
+ 
+
+
+NOTE: AUGUST 26, 1980  DENNIS GREY
+MARCH 1, 1986  NORC
+ 
+DESCRIPTION:
+IF (R(1736.)>0 & R(1736.)<=4) ! (R(1736.)>=9 & R(1736.)<=11) THEN SEX=1;
+IF R(1736.)>=15 & R(1736.)<=17 THEN SEX=1;
+IF (R(1736.)>=5 & R(1736.)<=8) ! (R(1736.)>=12 & R(1736.)<=14) THEN SEX=
+IF R(1736.)>=18 & R(1736.)<=20 THEN SEX=2;
+R(2148.)=SEX;
+SEX CODE CHANGED ON 42 CASES
+ 
+Lead In: R02147.00[Default]
+Default Next Question: R02149.00
+--------------------------------------------------------------------------------
+R02164.00    [REGION]                                       Survey Year: 1979
+  PRIMARY VARIABLE
+
+             REGION OF CURRENT RESIDENCE
+ 
+UNIVERSE: All except those with no records
+ 
+    2550       1 NORTHEAST
+    2934       2 NORTH CENTRAL
+    4568       3 SOUTH
+    2395       4 WEST
+  -------
+   12447
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>   12447   VALID SKIP(-4)     239     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:              4        Mean:                2.55
+ 
+
+
+NOTE: AUGUST 26, 1980  DENNIS GREY
+ 
+DESCRIPTION:
+REGION=-4;
+S=R(1740.);
+IF S=09 ! S=23 ! S=25 ! S=33 ! S=34 ! S=36 ! S=42 ! S=44 ! S=50
+                                                       THEN REGION=1;
+IF S=01 ! S=05 ! S=10 ! S=11 ! S=12 ! S=13 ! S=21 ! S=22 ! S=24 ! S=28 !
+   S=37 ! S=40 ! S=45 ! S=47 ! S=48 ! S=51 ! S=54      THEN REGION=3;
+IF S=17 ! S=18 ! S=19 ! S=20 ! S=26 ! S=27 ! S=29 ! S=31 ! S=39 !
+   S=46 ! S=38 ! S=55                                  THEN REGION=2;
+IF S=02 ! S=04 ! S=06 ! S=08 ! S=15 ! S=16 ! S=30 ! S=32 ! S=35 !
+   S=41 ! S=49 ! S=53 ! S=56                           THEN REGION=4;
+R(2164.)=REGION;
+ 
+Lead In: R02161.01[Default]
+Default Next Question: R02165.00
+--------------------------------------------------------------------------------
+R02166.01    [ENROLLMTREV79]                                Survey Year: 1979
+  PRIMARY VARIABLE
+
+             ENROLLMENT STATUS AS OF MAY 1 SURVEY YEAR (REVISED)
+ 
+ORIGINAL QUESTION NAME: ENROLLMTREV79
+ 
+UNIVERSE: Entire Sample
+ 
+COMMENT: Enrollment Status as of May 1 Survey Year
+ 
+    1866       1 NOT ENROLLED, COMPLETED LESS THAN 12TH GRADE
+    5745       2 ENROLLED IN HIGH SCHOOL
+    1681       3 ENROLLED IN COLLEGE
+    3388       4 NOT ENROLLED, HIGH SCHOOL GRADUATE
+  -------
+   12680
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+Invalid Skip(-3)       6
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              1        Max:              4        Mean:                2.52
+ 
+Lead In: R02165.00[Default]
+Default Next Question: R02167.01
+--------------------------------------------------------------------------------
+R02179.00    [TNFI_TRUNC]                                   Survey Year: 1979
+  PRIMARY VARIABLE
+
+             TOTAL NET FAMILY INCOME IN PAST CALENDAR YEAR *KEY* (TRUNCATED)
+ 
+ORIGINAL QUESTION NAME: *CREATED
+ 
+NOTE: FOR VARIABLE CREATION, SEE APPENDIX 2: TOTAL NET FAMILY INCOME
+ 
+ACTUAL NUMBER
+ 
+UNIVERSE: All
+ 
+      49           0
+     113           1 TO 999
+     207        1000 TO 1999
+     362        2000 TO 2999
+     509        3000 TO 3999
+     548        4000 TO 4999
+     794        5000 TO 5999
+     755        6000 TO 6999
+     517        7000 TO 7999
+     456        8000 TO 8999
+     394        9000 TO 9999
+    1552       10000 TO 14999
+    1108       15000 TO 19999
+     978       20000 TO 24999
+    1595       25000 TO 49999
+     258       50000 TO 9999999: 50000+
+  -------
+   10195
+ 
+Refusal(-1)          585
+Don't Know(-2)      1194
+Invalid Skip(-3)     712
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              0        Max:          75001        Mean:            14706.87
+ 
+Lead In: R02175.02[Default]
+Default Next Question: R02179.10
+--------------------------------------------------------------------------------
+R02179.10    [POVSTATUS]                                    Survey Year: 1979
+  PRIMARY VARIABLE
+
+             FAMILY POVERTY STATUS IN 1978
+ 
+ORIGINAL QUESTION NAME: *CREATED
+ 
+NOTE: FOR VARIABLE CREATION, SEE APPENDIX 2: TOTAL NET FAMILY INCOME
+ 
+    2534       1 IN POVERTY
+    7661       0 NOT IN POVERTY
+  -------
+   10195
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+Invalid Skip(-3)    2491
+TOTAL =========>   12686   VALID SKIP(-4)       0     NON-INTERVIEW(-5)       0
+ 
+Min:              0        Max:              1        Mean:                 .25
+ 
+
+
+NOTE: This variable corrects inconsistencies in creating the POVSTATUS variable 
+from 1979 through 1994; this series is now consistent through all years. For 
+archival purposes, the previous poverty status variables are available for those
+years with the QNAME=POVSTATUS_OLDSTND, although researchers are strongly 
+encouraged to use POVSTATUS.
+ 
+Lead In: R02179.00[Default]
+Default Next Question: R02179.11
+--------------------------------------------------------------------------------
+T08571.00    [Q10-2]                                        Survey Year: 2006
+  PRIMARY VARIABLE
+
+             NUMBER OF BIOLOGICAL CHILDREN REPORTED
+ 
+RECCOUNT([Final biological child roster])
+ 
+UNIVERSE: Female Rs
+ 
+COMMENT: Is there a child to check
+ 
+     609           0
+     635           1
+    1340           2
+     819           3
+     335           4
+     110           5
+      40           6
+      14           7
+       7           8
+       3           9
+       4          10 TO 999: 10+
+  -------
+    3916
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    3916   VALID SKIP(-4)    3737     NON-INTERVIEW(-5)    5033
+ 
+Min:              0        Max:             11        Mean:                2.07
+ 
+Lead In: T04235.00[Default] T04268.00[Default] T04279.00[Default] 
+         T04292.00[Default] T04303.00[Default] T03646.00[Default]  
+         T04292.00[1:1]
+Default Next Question: T08572.00
+--------------------------------------------------------------------------------
+T20151.00    [Q10-2]                                        Survey Year: 2008
+  PRIMARY VARIABLE
+
+             NUMBER OF BIOLOGICAL CHILDREN REPORTED
+ 
+RECCOUNT([Final biological child roster])
+ 
+UNIVERSE: Female Rs
+ 
+COMMENT: Is there a child to check
+ 
+     623           0
+     647           1
+    1352           2
+     827           3
+     336           4
+     112           5
+      46           6
+      17           7
+       7           8
+       4           9
+       4          10 TO 999: 10+
+  -------
+    3975
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    3975   VALID SKIP(-4)    3782     NON-INTERVIEW(-5)    4929
+ 
+Min:              0        Max:             11        Mean:                2.08
+ 
+Lead In: T15936.00[Default] T15987.00[Default] T15149.00[Default]  
+         T15947.00[1:1] T15969.00[0:0] T15987.00[1:1]
+Default Next Question: T20152.00
+--------------------------------------------------------------------------------
+T29986.00    [Q10-2]                                        Survey Year: 2010
+  PRIMARY VARIABLE
+
+             NUMBER OF BIOLOGICAL CHILDREN REPORTED
+ 
+RECCOUNT([Final biological child roster])
+ 
+UNIVERSE: Female Rs
+ 
+COMMENT: Is there a child to check
+ 
+     618           0
+     628           1
+    1313           2
+     814           3
+     336           4
+     110           5
+      43           6
+      17           7
+       7           8
+       4           9
+       4          10 TO 999: 10+
+  -------
+    3894
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    3894   VALID SKIP(-4)    3671     NON-INTERVIEW(-5)    5121
+ 
+Min:              0        Max:             11        Mean:                2.08
+ 
+Lead In: T26005.00[Default] T26029.00[Default] T26034.00[Default] 
+         T25594.00[Default]  T26010.00[1:1] T26020.00[0:0] T26034.00[1:1] 
+         T26034.00[2:2]
+Default Next Question: T29987.00
+--------------------------------------------------------------------------------
+T39425.00    [Q10-2]                                        Survey Year: 2012
+  PRIMARY VARIABLE
+
+             NUMBER OF BIOLOGICAL CHILDREN REPORTED
+ 
+RECCOUNT([Final biological child roster])
+ 
+UNIVERSE: Female Rs
+ 
+COMMENT: Is there a child to check
+ 
+     587           0
+     604           1
+    1289           2
+     791           3
+     325           4
+     109           5
+      41           6
+      16           7
+       7           8
+       4           9
+       4          10 TO 999: 10+
+  -------
+    3777
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    3777   VALID SKIP(-4)    3523     NON-INTERVIEW(-5)    5386
+ 
+Min:              0        Max:             11        Mean:                2.09
+ 
+Lead In: T35754.00[Default] T35778.00[Default] T35782.00[Default] 
+         T35787.00[Default] T35454.00[Default]  T35769.00[0:0] T35782.00[1:1]
+Default Next Question: T39426.00
+--------------------------------------------------------------------------------
+T48768.00    [Q10-2]                                        Survey Year: 2014
+  PRIMARY VARIABLE
+
+             NUMBER OF BIOLOGICAL CHILDREN REPORTED
+ 
+RECCOUNT([biochild roster])
+ 
+UNIVERSE: Female Rs
+ 
+COMMENT: Is there a child to check
+ 
+     579           0
+     590           1
+    1244           2
+     763           3
+     317           4
+     104           5
+      39           6
+      15           7
+       7           8
+       4           9
+       4          10 TO 999: 10+
+  -------
+    3666
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    3666   VALID SKIP(-4)    3404     NON-INTERVIEW(-5)    5616
+ 
+Min:              0        Max:             11        Mean:                2.08
+ 
+Lead In: T45488.00[Default] T45496.00[Default] T45500.00[Default] 
+         T45505.00[Default] T45181.00[Default]  T45500.00[1:1]
+Default Next Question: T48769.00
+--------------------------------------------------------------------------------
+T55930.00    [Q10-2]                                        Survey Year: 2016
+  PRIMARY VARIABLE
+
+             NUMBER OF BIOLOGICAL CHILDREN REPORTED
+ 
+RECCOUNT([biochild roster])
+ 
+UNIVERSE: Female Rs
+ 
+COMMENT: Is there a child to check
+ 
+     563           0   (Go To T55936.00)
+     572           1
+    1216           2
+     758           3
+     312           4
+     103           5
+      35           6
+      14           7
+       6           8
+       4           9
+       4          10 TO 999: 10+
+  -------
+    3587
+ 
+Refusal(-1)            0
+Don't Know(-2)         0
+TOTAL =========>    3587   VALID SKIP(-4)    3325     NON-INTERVIEW(-5)    5774
+ 
+Min:              0        Max:             11        Mean:                2.08
+ 
+Lead In: T54766.00[Default] T54561.00[Default]  T54555.00[1:1]
+Default Next Question: T55931.00
