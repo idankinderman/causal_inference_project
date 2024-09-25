@@ -1,45 +1,30 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.calibration import calibration_curve, CalibratedClassifierCV
-from sklearn.metrics import accuracy_score, roc_auc_score, brier_score_loss, f1_score
+from sklearn.metrics import roc_auc_score, brier_score_loss, make_scorer, f1_score, accuracy_score
 from sklearn.linear_model import LogisticRegression
 from xgboost import XGBClassifier
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.svm import SVC
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
-from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.model_selection import cross_val_score, GridSearchCV, cross_validate
+from sklearn.utils import resample
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import Pipeline
 from scipy import stats
 
 
 class PropensityScoreEstimator:
     def __init__(self, dataset_name="Dataset"):
-        self.models = {}  # Now stores both calibrated and uncalibrated models
-        self.model_scores = {}  # Stores both calibrated and uncalibrated model scores
+        self.models = {}  # Store trained models
+        self.model_scores = {}  # Store performance metrics for models
         self.default_model = None
         self.dataset_name = dataset_name  # Store the dataset name for titles
-        self.X_train = None
-        self.X_test = None
-        self.T_train = None
-        self.T_test = None
-        self.Y_train = None
-        self.Y_test = None
-
-    def fit(self, X_train, X_test, Y_train, Y_test, T_train, T_test, calibration_fraction=0.2):
-        self.X_train = X_train
-        self.X_test = X_test
-        self.T_train = T_train
-        self.T_test = T_test
-        self.Y_train = Y_train
-        self.Y_test = Y_test
-
-        # Split the training set into a training subset and a calibration subset
-        X_train_sub, X_calib, T_train_sub, T_calib, Y_train_sub, Y_calib = train_test_split(
-            X_train, T_train, Y_train, test_size=calibration_fraction, random_state=42
-        )
-
-        # Models to train with hyperparameters for cross-validation
-        model_list = {
+        self.X = None
+        self.Y = None
+        self.T = None
+        self.model_list = {
             'Logistic Regression (L2)': {
                 'model': LogisticRegression(max_iter=1000),
                 'params': {'penalty': ['l2'], 'C': [0.01, 0.1, 1, 10]}
@@ -78,63 +63,89 @@ class PropensityScoreEstimator:
             }
         }
 
-        # Train each model using GridSearchCV and calculate metrics
-        for model_name, model_info in model_list.items():
+    def fit(self, X, Y, T):
+        """Train multiple models using cross-validation with scaling, calibrate them, and store metrics from cross-validation."""
+        self.X = X
+        self.Y = Y
+        self.T = T
+
+        # Define a custom scoring dictionary including Brier score
+        scoring = {
+            'accuracy': 'accuracy',
+            'roc_auc': 'roc_auc',
+            'f1': 'f1',
+            'brier': make_scorer(brier_score_loss, response_method='predict_proba')
+        }
+
+        # Train each model using GridSearchCV and calculate metrics using cross-validation
+        for model_name, model_info in self.model_list.items():
             model = model_info['model']
             params = model_info['params']
 
+            # Print which model is being trained
+            print(f"Training model: {model_name}")
+
+            # Create a pipeline with scaling and the model
+            pipeline = Pipeline([
+                ('scaler', StandardScaler()),  # Feature scaling
+                ('model', model)  # Model to train
+            ])
+
             if params:
-                # Use GridSearchCV for hyperparameter tuning and cross-validation, based on F1 score
-                grid_search = GridSearchCV(model, param_grid=params, cv=5, scoring='f1', verbose=1)
-                grid_search.fit(X_train_sub, T_train_sub)
+                # Use GridSearchCV for hyperparameter tuning and cross-validation
+                grid_search = GridSearchCV(pipeline,
+                                           param_grid={'model__' + key: value for key, value in params.items()},
+                                           cv=5, scoring=scoring, verbose=1, refit='f1')
+                grid_search.fit(X, T)
                 best_model = grid_search.best_estimator_
+
+                # Extract cross-validation results for train/test accuracy, F1, AUC, and Brier score
+                cv_results = cross_validate(best_model, X, T, cv=5, scoring=scoring, return_train_score=True)
             else:
                 # No cross-validation needed (for models without hyperparameters to tune)
-                best_model = model.fit(X_train_sub, T_train_sub)
+                cv_results = cross_validate(pipeline, X, T, cv=5, scoring=scoring, return_train_score=True)
+                best_model = pipeline.fit(X, T)
 
             # Store the original (uncalibrated) model
             self.models[model_name] = best_model
 
-            # Calibrate the model and store it with '(Calibrated)' appended to the name
+            # Calibrate the model
             calibrated_model_name = f"{model_name} (Calibrated)"
             calibrated_model = CalibratedClassifierCV(best_model, method='sigmoid', cv='prefit')
-            calibrated_model.fit(X_calib, T_calib)  # Use the calibration set instead of the test set
+            calibrated_model.fit(X, T)
             self.models[calibrated_model_name] = calibrated_model
 
-            # Predictions (uncalibrated)
-            pred_proba = best_model.predict_proba(X_test)[:, 1]
-            pred_test = best_model.predict(X_test)
-            f1 = f1_score(T_test, pred_test)
-            test_acc = accuracy_score(T_test, pred_test)
-            train_acc = accuracy_score(T_train_sub, best_model.predict(X_train_sub))
-            auc = roc_auc_score(T_test, pred_proba)
-            ece = self._expected_calibration_error(T_test, pred_proba)
-            brier_score = brier_score_loss(T_test, pred_proba)
+            # Store performance metrics from cross-validation for uncalibrated models
+            train_acc_mean = np.mean(cv_results['train_accuracy'])
+            test_acc_mean = np.mean(cv_results['test_accuracy'])
+            auc_mean = np.mean(cv_results['test_roc_auc'])
+            f1_mean = np.mean(cv_results['test_f1'])
+            brier_mean = np.mean(cv_results['test_brier'])
 
-            # Store model performance metrics
             self.model_scores[model_name] = {
-                'Brier Score': brier_score,
-                'ECE': ece,
-                'AUC': auc,
-                'F1 Score': f1,
-                'Train Accuracy': train_acc,
-                'Test Accuracy': test_acc
+                'Train Accuracy': train_acc_mean,
+                'Test Accuracy': test_acc_mean,
+                'AUC': auc_mean,
+                'F1 Score': f1_mean,
+                'Brier Score': brier_mean
             }
 
-            # Predictions (calibrated)
-            calibrated_pred_proba = calibrated_model.predict_proba(X_test)[:, 1]
-            calibrated_brier_score = brier_score_loss(T_test, calibrated_pred_proba)
-            calibrated_ece = self._expected_calibration_error(T_test, calibrated_pred_proba)
-            calibrated_f1 = f1_score(T_test, calibrated_model.predict(X_test))
+            # Evaluate the calibrated model directly on the entire dataset
+            pred_proba = calibrated_model.predict_proba(X)[:, 1]
+            pred_labels = calibrated_model.predict(X)
 
-            # Store calibrated model performance metrics
+            # Metrics for the calibrated model
+            calibrated_test_acc = accuracy_score(T, pred_labels)
+            calibrated_auc = roc_auc_score(T, pred_proba)
+            calibrated_f1 = f1_score(T, pred_labels)
+            calibrated_brier = brier_score_loss(T, pred_proba)
+
+            # Store metrics for calibrated models
             self.model_scores[calibrated_model_name] = {
-                'Brier Score': calibrated_brier_score,
-                'ECE': calibrated_ece,
-                'AUC': auc,  # AUC doesn't change with calibration
+                'Test Accuracy': calibrated_test_acc,
+                'AUC': calibrated_auc,
                 'F1 Score': calibrated_f1,
-                'Train Accuracy': train_acc,
-                'Test Accuracy': test_acc
+                'Brier Score': calibrated_brier
             }
 
         # Set the default model to the one with the best F1 score (uncalibrated)
@@ -148,44 +159,132 @@ class PropensityScoreEstimator:
             raise ValueError(f"Model '{model_name}' not found. Available models: {list(self.models.keys())}")
 
     def plot_calibration(self):
-        """Plot calibration curves and histograms for all models, including calibrated ones."""
-        class_proportions = np.bincount(self.T_test) / len(self.T_test)
+        """Plot calibration curves and histograms for all models, including calibrated ones, ordered by Brier score."""
+        class_proportions = np.bincount(self.T) / len(self.T)
 
-        for model_name, model_info in self.model_scores.items():
+        # Sort models by increasing Brier score
+        sorted_models = sorted(self.model_scores.items(), key=lambda x: x[1]['Brier Score'])
+
+        for model_name, model_info in sorted_models:
             model = self.models[model_name]
-            brier_score = model_info['Brier Score']
-            ece = model_info['ECE']
             auc = model_info['AUC']
             f1 = model_info['F1 Score']
-            train_acc = model_info['Train Accuracy']
-            test_acc = model_info['Test Accuracy']
+            brier_score = model_info['Brier Score']
 
-            # Pass the dataset name to the plot title
-            self._plot_model_results(
-                model_name=model_name,
-                model=model,
-                brier_score=brier_score,
-                ece=ece,
-                auc=auc,
-                f1=f1,
-                train_acc=train_acc,
-                test_acc=test_acc,
-                class_proportions=class_proportions,
-                dataset_name=self.dataset_name
-            )
+            if 'Train Accuracy' in model_info:
+                train_acc = model_info['Train Accuracy']
+                test_acc = model_info['Test Accuracy']
+                # Plot for uncalibrated models with train/test accuracy
+                self._plot_model_results(
+                    model_name=model_name,
+                    model=model,
+                    auc=auc,
+                    f1=f1,
+                    train_acc=train_acc,
+                    test_acc=test_acc,
+                    brier_score=brier_score,
+                    class_proportions=class_proportions,
+                    dataset_name=self.dataset_name
+                )
+            else:
+                # Plot for calibrated models (use "Calibration Accuracy")
+                calibration_acc = model_info['Test Accuracy']
+                self._plot_model_results(
+                    model_name=model_name,
+                    model=model,
+                    auc=auc,
+                    f1=f1,
+                    train_acc=None,  # No train accuracy for calibrated models
+                    test_acc=calibration_acc,  # Renamed to "calibration accuracy"
+                    brier_score=brier_score,
+                    class_proportions=class_proportions,
+                    dataset_name=self.dataset_name
+                )
 
     def predict(self, X):
         if self.default_model is None:
             raise ValueError("No default model is set. Please train the models using the 'fit' method.")
         return self.default_model.predict_proba(X)[:, 1]
 
-    def estimate_ate(self, X, T, Y, alpha=0.05):
-        """Estimates the Average Treatment Effect (ATE) with a confidence interval."""
-        if self.default_model is None:
-            raise ValueError("No default model is set. Please train the models using the 'fit' method.")
+    def estimate_ate(self, X, T, Y, alpha=0.05, n_bootstraps=1000, return_bootstrap_samples=False):
+        """
+        Estimate the ATE using bootstrapping, returning the mean ATE,
+        its confidence interval, and standard error.
 
-        # Predict propensity scores using the default model
-        propensity_scores = self.default_model.predict_proba(X)[:, 1]
+        Optionally return the full set of bootstrap ATE estimates.
+        """
+        ate_list = []
+
+        for i in range(n_bootstraps):
+            # Bootstrap resampling
+            X_resampled, T_resampled, Y_resampled = resample(X, T, Y)
+
+            # Re-train the default model on the resampled data
+            model_info = self.model_list[self.default_model.named_steps['model'].__class__.__name__]
+            model = model_info['model']
+            params = model_info['params']
+
+            pipeline = Pipeline([('scaler', StandardScaler()), ('model', model)])
+
+            if params:
+                grid_search = GridSearchCV(pipeline,
+                                           param_grid={'model__' + key: value for key, value in params.items()}, cv=5,
+                                           scoring='f1', verbose=0)
+                grid_search.fit(X_resampled, T_resampled)
+                best_model = grid_search.best_estimator_
+            else:
+                best_model = pipeline.fit(X_resampled, T_resampled)
+
+            # Predict propensity scores using the retrained model
+            propensity_scores = best_model.predict_proba(X_resampled)[:, 1]
+
+            # Calculate weights
+            treated_mask = (T_resampled == 1)
+            untreated_mask = (T_resampled == 0)
+
+            treated_weights = 1 / propensity_scores[treated_mask]
+            untreated_weights = 1 / (1 - propensity_scores[untreated_mask])
+
+            # Estimate ATE using Inverse Probability of Treatment Weighting (IPTW)
+            treated_outcome = np.average(Y_resampled[treated_mask], weights=treated_weights)
+            untreated_outcome = np.average(Y_resampled[untreated_mask], weights=untreated_weights)
+
+            ate = treated_outcome - untreated_outcome
+            ate_list.append(ate)
+
+        # Estimate the mean ATE, standard error, and confidence intervals
+        ate_mean = np.mean(ate_list)
+        ate_se = np.std(ate_list)  # Standard error is the standard deviation of the bootstrapped ATE estimates
+        ate_ci_lower = np.percentile(ate_list, (alpha / 2) * 100)
+        ate_ci_upper = np.percentile(ate_list, (1 - alpha / 2) * 100)
+
+        if return_bootstrap_samples:
+            return ate_mean, (ate_ci_lower, ate_ci_upper), ate_se, ate_list
+        else:
+            return ate_mean, (ate_ci_lower, ate_ci_upper), ate_se
+
+    def _estimate_single_ate(self, X, T, Y):
+        """
+        Helper function to estimate ATE for a single treatment (T).
+        This is a simplified version of the ATE estimation for binary treatments.
+        """
+        # Re-train the default model
+        model_info = self.model_list[self.default_model.named_steps['model'].__class__.__name__]
+        model = model_info['model']
+        params = model_info['params']
+
+        pipeline = Pipeline([('scaler', StandardScaler()), ('model', model)])
+
+        if params:
+            grid_search = GridSearchCV(pipeline, param_grid={'model__' + key: value for key, value in params.items()},
+                                       cv=5, scoring='f1', verbose=0)
+            grid_search.fit(X, T)
+            best_model = grid_search.best_estimator_
+        else:
+            best_model = pipeline.fit(X, T)
+
+        # Predict propensity scores using the retrained model
+        propensity_scores = best_model.predict_proba(X)[:, 1]
 
         # Calculate weights
         treated_mask = (T == 1)
@@ -198,30 +297,64 @@ class PropensityScoreEstimator:
         treated_outcome = np.average(Y[treated_mask], weights=treated_weights)
         untreated_outcome = np.average(Y[untreated_mask], weights=untreated_weights)
 
-        ate = treated_outcome - untreated_outcome
+        return treated_outcome - untreated_outcome
 
-        # Variance estimation for confidence interval (Normal approximation)
-        treated_var = np.var(Y[treated_mask] * treated_weights) / len(treated_weights)
-        untreated_var = np.var(Y[untreated_mask] * untreated_weights) / len(untreated_weights)
-        se_ate = np.sqrt(treated_var + untreated_var)
+    def estimate_ate_difference(self, X, T1, T2, Y, alpha=0.05, n_bootstraps=1000, return_bootstrap_samples=False):
+        """
+        Estimate the difference in the ATE between two treatments (T1 and T2).
 
-        # Confidence interval for ATE
-        z_value = stats.norm.ppf(1 - alpha / 2)
-        ci_lower = ate - z_value * se_ate
-        ci_upper = ate + z_value * se_ate
+        Parameters:
+        - X: Feature matrix
+        - T1: Binary treatment assignment for T1 (1 for T1, 0 otherwise)
+        - T2: Binary treatment assignment for T2 (1 for T2, 0 otherwise)
+        - Y: Outcome variable
+        - alpha: Confidence level (default 0.05 for 95% CI)
+        - n_bootstraps: Number of bootstrap samples (default 1000)
+        - return_bootstrap_samples: If True, return all bootstrap ATE estimates (default False)
 
-        return ate, (ci_lower, ci_upper)
+        Returns:
+        - ATE difference (T1 - T2)
+        - Confidence interval (lower, upper)
+        - Standard error of the ATE difference
+        - (Optional) List of bootstrap ATE differences (if return_bootstrap_samples=True)
+        """
+        ate_diff_list = []
 
-    def _plot_model_results(self, model_name, model, brier_score, ece, auc, f1, train_acc, test_acc, class_proportions,
+        for i in range(n_bootstraps):
+            # Bootstrap resampling
+            X_resampled, T1_resampled, T2_resampled, Y_resampled = resample(X, T1, T2, Y)
+
+            # Estimate ATE for T1
+            ate_T1 = self._estimate_single_ate(X_resampled, T1_resampled, Y_resampled)
+
+            # Estimate ATE for T2
+            ate_T2 = self._estimate_single_ate(X_resampled, T2_resampled, Y_resampled)
+
+            # Calculate the difference in ATEs (T1 - T2)
+            ate_diff = ate_T1 - ate_T2
+            ate_diff_list.append(ate_diff)
+
+        # Estimate the mean difference, standard error, and confidence intervals
+        ate_diff_mean = np.mean(ate_diff_list)
+        ate_diff_se = np.std(ate_diff_list)
+        ate_diff_ci_lower = np.percentile(ate_diff_list, (alpha / 2) * 100)
+        ate_diff_ci_upper = np.percentile(ate_diff_list, (1 - alpha / 2) * 100)
+
+        if return_bootstrap_samples:
+            return ate_diff_mean, (ate_diff_ci_lower, ate_diff_ci_upper), ate_diff_se, ate_diff_list
+        else:
+            return ate_diff_mean, (ate_diff_ci_lower, ate_diff_ci_upper), ate_diff_se
+
+    def _plot_model_results(self, model_name, model, auc, f1, train_acc, test_acc, brier_score, class_proportions,
                             dataset_name):
         # Get predicted probabilities
-        pred_proba = model.predict_proba(self.X_test)[:, 1]
+        pred_proba = model.predict_proba(self.X)[:, 1]
 
         # Create figure with 2 subplots: one for calibration curve, one for histogram
         fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
         # Plot calibration curve
-        fraction_of_positives, mean_predicted_value = calibration_curve(self.T_test, pred_proba, n_bins=10)
+        fraction_of_positives, mean_predicted_value = calibration_curve(self.T, pred_proba, n_bins=10)
         axes[0].plot(mean_predicted_value, fraction_of_positives, marker='o', label=f'{model_name}')
         axes[0].plot([0, 1], [0, 1], linestyle='--', label='Perfectly Calibrated')
         axes[0].set_xlabel('Mean Predicted Value')
@@ -230,8 +363,8 @@ class PropensityScoreEstimator:
         axes[0].set_title('Calibration Curve')  # Add subtitle for the calibration curve
 
         # Plot histogram of predicted probabilities for treated and untreated groups
-        treated_scores = pred_proba[self.T_test == 1]
-        untreated_scores = pred_proba[self.T_test == 0]
+        treated_scores = pred_proba[self.T == 1]
+        untreated_scores = pred_proba[self.T == 0]
         axes[1].hist(treated_scores, bins=20, alpha=0.5, label='Treated', color='blue')
         axes[1].hist(untreated_scores, bins=20, alpha=0.5, label='Untreated', color='green')
         axes[1].set_xlabel('Propensity Score')
@@ -239,36 +372,14 @@ class PropensityScoreEstimator:
         axes[1].legend()
         axes[1].set_title('Propensity Score Distribution')  # Add subtitle for the histogram
 
-        # Joint title for both plots, including dataset name
-        fig.suptitle(
-            f'{dataset_name} - {model_name}\nBrier: {brier_score:.4f}, ECE: {ece:.4f}, AUC: {auc:.4f}, F1: {f1:.4f}, '
-            f'Train Acc: {train_acc:.2f}, Test Acc: {test_acc:.2f}\n'
-            f'Class Proportions - Treated: {class_proportions[1]:.4f}, Untreated: {class_proportions[0]:.4f}',
-            fontsize=12)
+        # Joint title for both plots, including dataset name, Brier score, and class proportions
+        title = f'{dataset_name} - {model_name}\nAUC: {auc:.4f}, F1: {f1:.4f}, Brier Score: {brier_score:.4f}, '
+        if train_acc is not None:
+            title += f'Train Acc: {train_acc:.2f}, '
+        title += f'Accuracy: {test_acc:.2f}\nClass Proportions - Treated: {class_proportions[1]:.4f}, Untreated: {class_proportions[0]:.4f}'
+
+        fig.suptitle(title, fontsize=12)
 
         # Show the plots
         plt.tight_layout(rect=[0, 0, 1, 0.95])  # Adjust layout to fit the title
         plt.show()
-
-    def _expected_calibration_error(self, y_true, y_prob, n_bins=10):
-        bin_edges = np.linspace(0, 1, n_bins + 1)
-        bin_centers = (bin_edges[1:] + bin_edges[:-1]) / 2
-        bin_assignments = np.digitize(y_prob, bin_edges, right=True) - 1
-
-        bin_sums = np.zeros(n_bins)
-        bin_total = np.zeros(n_bins)
-        bin_positives = np.zeros(n_bins)
-
-        for b in range(n_bins):
-            bin_mask = bin_assignments == b
-            bin_total[b] = np.sum(bin_mask)
-            bin_sums[b] = np.sum(y_prob[bin_mask])
-            bin_positives[b] = np.sum(y_true[bin_mask])
-
-        nonempty_bins = bin_total > 0
-        bin_probs = bin_sums[nonempty_bins] / bin_total[nonempty_bins]
-        bin_acc = bin_positives[nonempty_bins] / bin_total[nonempty_bins]
-
-        ece = np.sum(bin_total[nonempty_bins] * np.abs(bin_acc - bin_probs)) / np.sum(bin_total[nonempty_bins])
-
-        return ece
