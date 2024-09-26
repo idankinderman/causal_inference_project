@@ -191,8 +191,6 @@ class S_learner:
             null_counts = df.isnull().sum()
             print("Count of null values in each column:")
             print(null_counts[null_counts > 0])
-        else:
-            print("The DataFrame does not contain any null values.")
 
 #######################################################
 # T Learner
@@ -379,8 +377,6 @@ class T_learner:
             null_counts = df.isnull().sum()
             print("Count of null values in each column:")
             print(null_counts[null_counts > 0])
-        else:
-            print("The DataFrame does not contain any null values.")
 
 #######################################################
 # Matching
@@ -483,56 +479,58 @@ def causal_experiment(df, title):
 
     # 1. Converting T to binary
     threshold = 2
-    df['T_train'] = df['T_train'].apply(lambda x: 0 if x <= threshold else 1)
-    df['T_test'] = df['T_test'].apply(lambda x: 0 if x <= threshold else 1)
+    df['T1_train'] = df['T1_train'].apply(lambda x: 0 if x <= threshold else 1)
+    df['T2_train'] = df['T2_train'].apply(lambda x: 0 if x <= threshold else 1)
+    df['T1_test'] = df['T1_test'].apply(lambda x: 0 if x <= threshold else 1)
+    df['T2_test'] = df['T2_test'].apply(lambda x: 0 if x <= threshold else 1)
+
+    for T_key, T_text in [('T1', 'Expected number of children'), ('T2', 'Ideal number of children')]:
+        # 2. S-Learner
+        print("\n\n------------------- S-Learner -------------------" + T_text)
+        print(title, "\n")
+        s_learner = S_learner(x_train=df['X_train_normalized'],
+                              y_train=df['Y_train'],
+                              x_test=df['X_test_normalized'],
+                              y_test=df['Y_test'],
+                              T_train=df[f'{T_key}_train'],
+                              T_test=df[f'{T_key}_test'])
+        s_learner.fit()
+        s_learner.evaluate()
+        s_learner.compute_ATE()
+        ATE = s_learner.compute_ATE_final(['svr_rbf', 'gradient_boosting', 'random_forest'])
+        print("\nBootstrap:")
+        s_learner.bootstrap()
 
 
-    # 2. S-Learner
-    print("\n\n------------------- S-Learner -------------------")
-    print(title, "\n")
-    s_learner = S_learner(x_train=df['X_train_normalized'],
-                          y_train=df['Y_train'],
-                          x_test=df['X_test_normalized'],
-                          y_test=df['Y_test'],
-                          T_train=df['T_train'],
-                          T_test=df['T_test'])
-    s_learner.fit()
-    s_learner.evaluate()
-    s_learner.compute_ATE()
-    ATE = s_learner.compute_ATE_final(['svr_rbf', 'gradient_boosting', 'random_forest'])
-    print("\nBootstrap:")
-    s_learner.bootstrap()
-    
+        # 3. T-Learner
+        print("\n\n------------------- T-Learner -------------------" + T_text)
+        print(title, "\n")
+        t_learner = T_learner(x_train=df['X_train_normalized'],
+                              y_train=df['Y_train'],
+                              x_test=df['X_test_normalized'],
+                              y_test=df['Y_test'],
+                              T_train=df[f'{T_key}_train'],
+                              T_test=df[f'{T_key}_test'])
+        t_learner.fit()
+        t_learner.evaluate()
+        t_learner.compute_ATE()
+        ATE = t_learner.compute_ATE_final(['svr_rbf', 'gradient_boosting', 'random_forest'])
+        t_learner.bootstrap()
 
-    # 3. T-Learner
-    print("\n\n------------------- T-Learner -------------------")
-    print(title, "\n")
-    t_learner = T_learner(x_train=df['X_train_normalized'],
-                          y_train=df['Y_train'],
-                          x_test=df['X_test_normalized'],
-                          y_test=df['Y_test'],
-                          T_train=df['T_train'],
-                          T_test=df['T_test'])
-    t_learner.fit()
-    t_learner.evaluate()
-    t_learner.compute_ATE()
-    ATE = t_learner.compute_ATE_final(['svr_rbf', 'gradient_boosting', 'random_forest'])
-    t_learner.bootstrap()
-
-    # 4. Matching
-    print("\n\n------------------- Matching -------------------")
-    print(title, "\n")
-    matching = Matching(x=pd.concat([df['X_train_normalized'].reset_index(drop=True),
-                                     df['X_test_normalized'].reset_index(drop=True)], axis=0),
-                        y=pd.concat([df['Y_train'].reset_index(drop=True),df['Y_test'].reset_index(drop=True)],axis=0),
-                        T=pd.concat([df['T_train'], df['T_test']], axis=0))
-    matching.compute_ATE(1)
-    matching.compute_ATE(3)
-    matching.compute_ATE(5)
-    matching.compute_ATE(9)
-    matching.compute_ATE(15)
-    matching.compute_ATE(50)
-    matching.bootstrap(k=9)
+        # 4. Matching
+        print("\n\n------------------- Matching -------------------" + T_text)
+        print(title, "\n")
+        matching = Matching(x=pd.concat([df['X_train_normalized'].reset_index(drop=True),
+                                         df['X_test_normalized'].reset_index(drop=True)], axis=0),
+                            y=pd.concat([df['Y_train'].reset_index(drop=True),df['Y_test'].reset_index(drop=True)],axis=0),
+                            T=pd.concat([df[f'{T_key}_train'], df[f'{T_key}_test']], axis=0))
+        matching.compute_ATE(1)
+        matching.compute_ATE(3)
+        matching.compute_ATE(5)
+        matching.compute_ATE(9)
+        matching.compute_ATE(15)
+        matching.compute_ATE(50)
+        matching.bootstrap(k=9)
 
 
 #######################################################
