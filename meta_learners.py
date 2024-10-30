@@ -5,7 +5,6 @@ import sklearn
 import random
 import pickle
 
-
 # S-Learner
 from sklearn.linear_model import LinearRegression
 from sklearn.svm import SVR
@@ -14,10 +13,8 @@ from sklearn.metrics import mean_squared_error
 from sklearn.neural_network import MLPRegressor
 from sklearn.neighbors import NearestNeighbors
 
-
 random.seed(42)
 np.random.seed(42)
-
 
 
 #######################################################
@@ -191,6 +188,7 @@ class S_learner:
             null_counts = df.isnull().sum()
             print("Count of null values in each column:")
             print(null_counts[null_counts > 0])
+
 
 #######################################################
 # T Learner
@@ -378,6 +376,7 @@ class T_learner:
             print("Count of null values in each column:")
             print(null_counts[null_counts > 0])
 
+
 #######################################################
 # Matching
 
@@ -452,7 +451,8 @@ class Matching:
             y_train_boot_0 = self.y0[bootstrap_indices0].reset_index(drop=True)
             y_train_boot_1 = self.y1[bootstrap_indices1].reset_index(drop=True)
 
-            final_ATE = self.compute_ATE(k=k, x0=x_train_boot_0, y0=y_train_boot_0, x1=x_train_boot_1, y1=y_train_boot_1, bootstrap=True)
+            final_ATE = self.compute_ATE(k=k, x0=x_train_boot_0, y0=y_train_boot_0, x1=x_train_boot_1,
+                                         y1=y_train_boot_1, bootstrap=True)
             self.ATE_list.append(final_ATE)
 
         # Convert ATE list to a NumPy array for numerical operations
@@ -471,6 +471,7 @@ class Matching:
         print("\nMatching bootstrap")
         print("mean_ATE", mean_ATE, "CI_lower", CI_lower, "CI_upper", CI_upper)
         return mean_ATE, CI_lower, CI_upper
+
 
 #######################################################
 
@@ -501,7 +502,6 @@ def causal_experiment(df, title):
         print("\nBootstrap:")
         s_learner.bootstrap()
 
-
         # 3. T-Learner
         print("\n\n------------------- T-Learner -------------------" + T_text)
         print(title, "\n")
@@ -522,7 +522,8 @@ def causal_experiment(df, title):
         print(title, "\n")
         matching = Matching(x=pd.concat([df['X_train_normalized'].reset_index(drop=True),
                                          df['X_test_normalized'].reset_index(drop=True)], axis=0),
-                            y=pd.concat([df['Y_train'].reset_index(drop=True),df['Y_test'].reset_index(drop=True)],axis=0),
+                            y=pd.concat([df['Y_train'].reset_index(drop=True), df['Y_test'].reset_index(drop=True)],
+                                        axis=0),
                             T=pd.concat([df[f'{T_key}_train'], df[f'{T_key}_test']], axis=0))
         matching.compute_ATE(1)
         matching.compute_ATE(3)
@@ -537,17 +538,16 @@ def causal_experiment(df, title):
 
 if __name__ == '__main__':
     # 1. young_no_children
-    with open('df_young_no_children_dict.pickle', 'rb') as f:
+    with open('./preprocessed_data/df_young_no_children_dict.pickle', 'rb') as f:
         df_young_no_children_dict = pickle.load(f)
     causal_experiment(df_young_no_children_dict, title="Young without children participants")
 
     # 2. mature_no_children
-    with open('df_mature_no_children_dict.pickle', 'rb') as f:
+    with open('./preprocessed_data/df_mature_no_children_dict.pickle', 'rb') as f:
         df_mature_no_children_dict = pickle.load(f)
     causal_experiment(df_mature_no_children_dict, title="Mature without children participants")
 
-
     # 3. mature_with_children
-    with open('df_mature_with_children_dict.pickle', 'rb') as f:
+    with open('./preprocessed_data/df_mature_with_children_dict.pickle', 'rb') as f:
         df_mature_with_children_dict = pickle.load(f)
     causal_experiment(df_mature_with_children_dict, title="Mature with children participants")

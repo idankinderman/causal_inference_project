@@ -151,7 +151,7 @@ def create_causal_curves(df):
 if __name__ == '__main__':
 
     # df_young_no_children_dict
-    with open('df_young_no_children_dict.pickle', 'rb') as f:
+    with open('./preprocessed_data/df_young_no_children_dict.pickle', 'rb') as f:
         df_young_no_children_dict = pickle.load(f)
 
     gps_results = create_causal_curves(df_young_no_children_dict)
@@ -161,7 +161,7 @@ if __name__ == '__main__':
 
     ########################################################################################################################
     # df_mature_no_children_dict
-    with open('df_mature_no_children_dict.pickle', 'rb') as f:
+    with open('./preprocessed_data/df_mature_no_children_dict.pickle', 'rb') as f:
         df_mature_no_children_dict = pickle.load(f)
 
     gps_results = create_causal_curves(df_mature_no_children_dict)
@@ -171,7 +171,7 @@ if __name__ == '__main__':
 
     ########################################################################################################################
     # df_mature_with_children_dict
-    with open('df_mature_with_children_dict.pickle', 'rb') as f:
+    with open('./preprocessed_data/df_mature_with_children_dict.pickle', 'rb') as f:
         df_mature_with_children_dict = pickle.load(f)
 
     df_mature_with_children_dict['X_train_normalized'] = df_mature_with_children_dict['X_train_normalized'].drop("SAMPLE ID  79 INT_MIL FEMALE HISPANIC", axis=1)
