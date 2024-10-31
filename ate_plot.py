@@ -108,17 +108,17 @@ if __name__ == '__main__':
     dir1 = {'S-learner': {"# Children expected 79" : [0.0192, 0.1074, 0.2142], "# Children ideal 79" : [0.0292, 0.1274, 0.2342]},
             'T-learner': {"# Children expected 79" : [0.0997, 0.2244, 0.3476], "# Children ideal 79" : [0.1097, 0.2344, 0.3576]},
             'Matching': {"# Children expected 79" : [0.0428, 0.1916, 0.3360], "# Children ideal 79" : [0.0528, 0.2016, 0.3460]},
-            'IPW': {"# Children expected 79" : [-1.1918, 0.1901, 1.7777], "# Children ideal 79" : [-1.2484, 0.1272, 1.5462]}}
+            'IPW': {"# Children expected 79" : [-0.2837, 0.1745, 0.7], "# Children ideal 79" : [-0.4269, 0.1098, 0.6179]}}
 
     dir2 = {'S-learner': {"# Children expected 79" : [0.0354, 0.1321, 0.2158], "# Children ideal 79" : [0.0454, 0.1421, 0.2258]},
             'T-learner': {"# Children expected 79" : [0.1190, 0.2428, 0.3837], "# Children ideal 79" : [0.1290, 0.2528, 0.3937]},
             'Matching': {"# Children expected 79" : [0.1343, 0.2653, 0.3940], "# Children ideal 79" : [0.1443, 0.2753, 0.4040]},
-            'IPW': {"# Children expected 79" : [-0.7726, 0.2659, 1.5841], "# Children ideal 79" : [-0.9921, 0.1634, 1.3006]}}
+            'IPW': {"# Children expected 79" : [-0.2032, 0.2419, 0.6878], "# Children ideal 79" : [-0.2665, 0.2064, 0.6309]}}
 
     dir3 = {'S-learner': {"# Children expected 79" : [0.0304, 0.1500, 0.3088], "# Children ideal 79" : [0.0404, 0.1600, 0.3188]},
             'T-learner': {"# Children expected 79" : [0.2199, 0.4148, 0.6228], "# Children ideal 79" : [0.2299, 0.4248, 0.6328]},
             'Matching': {"# Children expected 79" : [0.2421, 0.4564, 0.6953], "# Children ideal 79" : [0.2521, 0.4664, 0.7053]},
-            'IPW': {"# Children expected 79" : [-0.8413, 0.4793, 1.9875], "# Children ideal 79" : [-1.3267, 0.4544, 2.0796]}}
+            'IPW': {"# Children expected 79" : [-0.3282, 0.4447, 1.1937], "# Children ideal 79" : [-0.3558, 0.4459, 1.2902]}}
 
     plot_ATE_with_confidence_intervals(dir1,
                                        dir2,
