@@ -105,20 +105,26 @@ if __name__ == '__main__':
             'Matching': [0.24214241866175568, 0.456413546142828, 0.6953243298547166]}
     """
 
-    dir1 = {'S-learner': {"# Children expected 79" : [0.0192, 0.1074, 0.2142], "# Children ideal 79" : [0.0292, 0.1274, 0.2342]},
-            'T-learner': {"# Children expected 79" : [0.0997, 0.2244, 0.3476], "# Children ideal 79" : [0.1097, 0.2344, 0.3576]},
-            'Matching': {"# Children expected 79" : [0.0428, 0.1916, 0.3360], "# Children ideal 79" : [0.0528, 0.2016, 0.3460]},
-            'IPW': {"# Children expected 79" : [-0.2837, 0.1745, 0.7], "# Children ideal 79" : [-0.4269, 0.1098, 0.6179]}}
+    # Young without children participants
+    dir1 = {'S-learner': {"# Children expected 79" : [0.0088, 0.0918, 0.2093], "# Children ideal 79" : [-0.0153, 0.0609, 0.1643]},
+            'T-learner': {"# Children expected 79" : [0.0494, 0.1870, 0.3444], "# Children ideal 79" : [-0.0003, 0.1497, 0.297]},
+            'Matching': {"# Children expected 79" : [0.0151, 0.1835, 0.3535], "# Children ideal 79" : [-0.0118, 0.1558, 0.3199]},
+            'IPW': {"# Children expected 79" : [-0.2837, 0.1745, 0.7], "# Children ideal 79" : [-0.4269, 0.1098, 0.6179]}
+            }
 
-    dir2 = {'S-learner': {"# Children expected 79" : [0.0354, 0.1321, 0.2158], "# Children ideal 79" : [0.0454, 0.1421, 0.2258]},
-            'T-learner': {"# Children expected 79" : [0.1190, 0.2428, 0.3837], "# Children ideal 79" : [0.1290, 0.2528, 0.3937]},
-            'Matching': {"# Children expected 79" : [0.1343, 0.2653, 0.3940], "# Children ideal 79" : [0.1443, 0.2753, 0.4040]},
-            'IPW': {"# Children expected 79" : [-0.2032, 0.2419, 0.6878], "# Children ideal 79" : [-0.2665, 0.2064, 0.6309]}}
+    # Mature without children participants
+    dir2 = {'S-learner': {"# Children expected 79" : [0.0421, 0.1303, 0.2398], "# Children ideal 79" : [0.0374, 0.1239, 0.2419]},
+            'T-learner': {"# Children expected 79" : [0.0832, 0.2204, 0.3606], "# Children ideal 79" : [0.0753, 0.2177, 0.3631]},
+            'Matching': {"# Children expected 79" : [0.1019, 0.2436, 0.3781], "# Children ideal 79" : [0.0372, 0.1760, 0.3116]},
+            'IPW': {"# Children expected 79" : [-0.2032, 0.2419, 0.6878], "# Children ideal 79" : [-0.2665, 0.2064, 0.6309]}
+            }
 
-    dir3 = {'S-learner': {"# Children expected 79" : [0.0304, 0.1500, 0.3088], "# Children ideal 79" : [0.0404, 0.1600, 0.3188]},
-            'T-learner': {"# Children expected 79" : [0.2199, 0.4148, 0.6228], "# Children ideal 79" : [0.2299, 0.4248, 0.6328]},
-            'Matching': {"# Children expected 79" : [0.2421, 0.4564, 0.6953], "# Children ideal 79" : [0.2521, 0.4664, 0.7053]},
-            'IPW': {"# Children expected 79" : [-0.3282, 0.4447, 1.1937], "# Children ideal 79" : [-0.3558, 0.4459, 1.2902]}}
+    # Mature with children participants
+    dir3 = {'S-learner': {"# Children expected 79" : [0.0809, 0.2139, 0.3663], "# Children ideal 79" : [0.0908, 0.2440, 0.4487]},
+            'T-learner': {"# Children expected 79" : [0.2689, 0.4791, 0.6818], "# Children ideal 79" : [0.3304, 0.5551, 0.7727]},
+            'Matching': {"# Children expected 79" : [0.2729, 0.5055, 0.7539], "# Children ideal 79" : [0.2541, 0.5293, 0.7907]},
+            'IPW': {"# Children expected 79" : [-0.3282, 0.4447, 1.1937], "# Children ideal 79" : [-0.3558, 0.4459, 1.2902]}
+            }
 
     plot_ATE_with_confidence_intervals(dir1,
                                        dir2,
