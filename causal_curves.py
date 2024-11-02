@@ -1,12 +1,11 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-#import seaborn as sns
+# import seaborn as sns
 import sklearn
 import random
 import pickle
 import matplotlib.image as mpimg
-
 
 from causal_curve import GPS_Regressor
 from causal_curve import TMLE_Regressor
@@ -20,6 +19,7 @@ def plot_mean_and_CI(ax, treatment, mean, lb, ub, color_mean=None, color_shading
     ax.fill_between(treatment, lb, ub, color=color_shading, alpha=0.3)
     # Plot the mean on top
     ax.plot(treatment, mean, color=color_mean, linewidth=0.75, label=label)
+
 
 def plot_causal_curve(results_dict, fig_name, title, x_label, y_label):
     # Process the first key: '# Children expected 79'
@@ -60,10 +60,12 @@ def plot_causal_curve(results_dict, fig_name, title, x_label, y_label):
     fig, ax = plt.subplots()
 
     # Plot the data for '# Children expected 79'
-    plot_mean_and_CI(ax, treat_expected, mean_expected, lb_expected, ub_expected, color_mean='b', color_shading='b', label='# children expected 79')
+    plot_mean_and_CI(ax, treat_expected, mean_expected, lb_expected, ub_expected, color_mean='b', color_shading='b',
+                     label='# children expected 79')
 
     # Plot the data for '# Children ideal 79'
-    plot_mean_and_CI(ax, treat_ideal, mean_ideal, lb_ideal, ub_ideal, color_mean='g', color_shading='g', label='# children ideal 79')
+    plot_mean_and_CI(ax, treat_ideal, mean_ideal, lb_ideal, ub_ideal, color_mean='g', color_shading='g',
+                     label='# children ideal 79')
 
     # Labels and title
     ax.set_xlabel(x_label, fontsize=13)
@@ -97,6 +99,7 @@ def plot_causal_curve(results_dict, fig_name, title, x_label, y_label):
 
     # Save the figure
     fig.savefig(f'figures/{fig_name}_causal_curve.png', bbox_inches='tight', dpi=300)
+
 
 def stack_plots(plot1_path, plot2_path, plot3_path, save_path):
     # Load the images
@@ -133,15 +136,21 @@ def create_causal_curves(df):
     # T1 - # Children expected 79
     gps = GPS_Regressor()
     gps.fit(T=pd.concat([df['T1_train'], df['T1_test']], axis=0),
-            X=pd.concat([df['X_train_normalized'].reset_index(drop=True), df['X_test_normalized'].reset_index(drop=True)], axis=0),
-            y=pd.concat([df['Y_train'].reset_index(drop=True), df['Y_test'].reset_index(drop=True)], axis=0).astype('Float64'))
+            X=pd.concat(
+                [df['X_train_normalized'].reset_index(drop=True), df['X_test_normalized'].reset_index(drop=True)],
+                axis=0),
+            y=pd.concat([df['Y_train'].reset_index(drop=True), df['Y_test'].reset_index(drop=True)], axis=0).astype(
+                'Float64'))
     gps_results['# Children expected 79'] = gps.calculate_CDRC(0.95)
 
     # T2 - # Children ideal 79
     gps = GPS_Regressor()
     gps.fit(T=pd.concat([df['T2_train'], df['T2_test']], axis=0).astype('Float64'),
-            X=pd.concat([df['X_train_normalized'].reset_index(drop=True), df['X_test_normalized'].reset_index(drop=True)],axis=0),
-            y=pd.concat([df['Y_train'].reset_index(drop=True), df['Y_test'].reset_index(drop=True)], axis=0).astype('Float64'))
+            X=pd.concat(
+                [df['X_train_normalized'].reset_index(drop=True), df['X_test_normalized'].reset_index(drop=True)],
+                axis=0),
+            y=pd.concat([df['Y_train'].reset_index(drop=True), df['Y_test'].reset_index(drop=True)], axis=0).astype(
+                'Float64'))
     gps_results['# Children ideal 79'] = gps.calculate_CDRC(0.95)
 
     return gps_results
@@ -149,7 +158,6 @@ def create_causal_curves(df):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-
     # df_young_no_children_dict
     with open('./preprocessed_data/df_young_no_children_dict.pickle', 'rb') as f:
         df_young_no_children_dict = pickle.load(f)
@@ -174,8 +182,10 @@ if __name__ == '__main__':
     with open('./preprocessed_data/df_mature_with_children_dict.pickle', 'rb') as f:
         df_mature_with_children_dict = pickle.load(f)
 
-    df_mature_with_children_dict['X_train_normalized'] = df_mature_with_children_dict['X_train_normalized'].drop("SAMPLE ID  79 INT_MIL FEMALE HISPANIC", axis=1)
-    df_mature_with_children_dict['X_test_normalized'] = df_mature_with_children_dict['X_test_normalized'].drop("SAMPLE ID  79 INT_MIL FEMALE HISPANIC", axis=1)
+    df_mature_with_children_dict['X_train_normalized'] = df_mature_with_children_dict['X_train_normalized'].drop(
+        "SAMPLE ID  79 INT_MIL FEMALE HISPANIC", axis=1)
+    df_mature_with_children_dict['X_test_normalized'] = df_mature_with_children_dict['X_test_normalized'].drop(
+        "SAMPLE ID  79 INT_MIL FEMALE HISPANIC", axis=1)
 
     ###########
 
@@ -214,4 +224,3 @@ if __name__ == '__main__':
                 "figures/df_mature_no_children_dict_causal_curve.png",
                 "figures/df_mature_with_children_dict_causal_curve.png",
                 "figures/causal_curve_stack.png")
-

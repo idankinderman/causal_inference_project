@@ -17,11 +17,13 @@ from sklearn.impute import SimpleImputer
 from scipy import stats
 import seaborn as sns  # Used for improved plotting
 
+
 class PropensityScoreEstimatorSelector:
     """
     Class used to select model type for propensity score estimation with handling of calibration,
     cross-validation, and evaluation metrics.
     """
+
     def __init__(self, dataset_name="Dataset"):
         self.models = {}
         self.model_scores = {}
@@ -95,7 +97,8 @@ class PropensityScoreEstimatorSelector:
             if isinstance(model, (LogisticRegression, SVC, KNeighborsClassifier)):
                 preprocessor = ColumnTransformer(
                     transformers=[
-                        ('num', Pipeline([('imputer', SimpleImputer(strategy='mean')), ('scaler', StandardScaler())]), X.columns)
+                        ('num', Pipeline([('imputer', SimpleImputer(strategy='mean')), ('scaler', StandardScaler())]),
+                         X.columns)
                     ],
                     remainder='passthrough'
                 )
@@ -119,7 +122,8 @@ class PropensityScoreEstimatorSelector:
                 )
                 grid_search.fit(X_train, T_train)
                 best_model = grid_search.best_estimator_
-                cv_results = cross_validate(best_model, X_train, T_train, cv=5, scoring=scoring, return_train_score=True)
+                cv_results = cross_validate(best_model, X_train, T_train, cv=5, scoring=scoring,
+                                            return_train_score=True)
             else:
                 cv_results = cross_validate(pipeline, X_train, T_train, cv=5, scoring=scoring, return_train_score=True)
                 best_model = pipeline.fit(X_train, T_train)
@@ -135,7 +139,8 @@ class PropensityScoreEstimatorSelector:
 
             # Collect and store performance metrics
             self.model_scores[model_name] = self._extract_cv_metrics(cv_results)
-            self.model_scores[calibrated_model_name] = self._evaluate_calibrated_model(calibrated_model, X_calib, T_calib)
+            self.model_scores[calibrated_model_name] = self._evaluate_calibrated_model(calibrated_model, X_calib,
+                                                                                       T_calib)
 
         # Select the default model with the highest F1 score
         best_model_name = max(self.model_scores, key=lambda x: self.model_scores[x]['F1 Score'])
@@ -260,4 +265,3 @@ class PropensityScoreEstimatorSelector:
         fig.suptitle(title, fontsize=12)
         plt.tight_layout(rect=[0, 0, 1, 0.95])
         plt.show()
-

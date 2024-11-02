@@ -1,4 +1,1 @@
-# Causal Inference Project
-
-# TODOs
-* Correct for possibly related responders.
+Source code for Causal Inference (097400) project of Edan Kinderman and Itamar Harel.

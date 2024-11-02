@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 
 def plot_ATE_with_confidence_intervals(dir1, dir2, dir3, title1, title2, title3, main_title, save_path,
-                                          color1='blue', color2='green'):
+                                       color1='blue', color2='green'):
     # Increase the text sizes
     label_size = 16
     title_size = 20
@@ -88,6 +88,7 @@ def plot_ATE_with_confidence_intervals(dir1, dir2, dir3, title1, title2, title3,
     # Close the plot to free up memory
     plt.close(fig)
 
+
 #######################################################
 
 if __name__ == '__main__':
@@ -106,24 +107,35 @@ if __name__ == '__main__':
     """
 
     # Young without children participants
-    dir1 = {'S-learner': {"# Children expected 79" : [0.0088, 0.0918, 0.2093], "# Children ideal 79" : [-0.0153, 0.0609, 0.1643]},
-            'T-learner': {"# Children expected 79" : [0.0494, 0.1870, 0.3444], "# Children ideal 79" : [-0.0003, 0.1497, 0.297]},
-            'Matching': {"# Children expected 79" : [0.0151, 0.1835, 0.3535], "# Children ideal 79" : [-0.0118, 0.1558, 0.3199]},
-            'IPW': {"# Children expected 79" : [-0.2837, 0.1745, 0.7], "# Children ideal 79" : [-0.4269, 0.1098, 0.6179]}
+    dir1 = {'S-learner': {"# Children expected 79": [0.0088, 0.0918, 0.2093],
+                          "# Children ideal 79": [-0.0153, 0.0609, 0.1643]},
+            'T-learner': {"# Children expected 79": [0.0494, 0.1870, 0.3444],
+                          "# Children ideal 79": [-0.0003, 0.1497, 0.297]},
+            'Matching': {"# Children expected 79": [0.0151, 0.1835, 0.3535],
+                         "# Children ideal 79": [-0.0118, 0.1558, 0.3199]},
+            'IPW': {"# Children expected 79": [-0.2837, 0.1745, 0.7], "# Children ideal 79": [-0.4269, 0.1098, 0.6179]}
             }
 
     # Mature without children participants
-    dir2 = {'S-learner': {"# Children expected 79" : [0.0421, 0.1303, 0.2398], "# Children ideal 79" : [0.0374, 0.1239, 0.2419]},
-            'T-learner': {"# Children expected 79" : [0.0832, 0.2204, 0.3606], "# Children ideal 79" : [0.0753, 0.2177, 0.3631]},
-            'Matching': {"# Children expected 79" : [0.1019, 0.2436, 0.3781], "# Children ideal 79" : [0.0372, 0.1760, 0.3116]},
-            'IPW': {"# Children expected 79" : [-0.2032, 0.2419, 0.6878], "# Children ideal 79" : [-0.2665, 0.2064, 0.6309]}
+    dir2 = {'S-learner': {"# Children expected 79": [0.0421, 0.1303, 0.2398],
+                          "# Children ideal 79": [0.0374, 0.1239, 0.2419]},
+            'T-learner': {"# Children expected 79": [0.0832, 0.2204, 0.3606],
+                          "# Children ideal 79": [0.0753, 0.2177, 0.3631]},
+            'Matching': {"# Children expected 79": [0.1019, 0.2436, 0.3781],
+                         "# Children ideal 79": [0.0372, 0.1760, 0.3116]},
+            'IPW': {"# Children expected 79": [-0.2032, 0.2419, 0.6878],
+                    "# Children ideal 79": [-0.2665, 0.2064, 0.6309]}
             }
 
     # Mature with children participants
-    dir3 = {'S-learner': {"# Children expected 79" : [0.0809, 0.2139, 0.3663], "# Children ideal 79" : [0.0908, 0.2440, 0.4487]},
-            'T-learner': {"# Children expected 79" : [0.2689, 0.4791, 0.6818], "# Children ideal 79" : [0.3304, 0.5551, 0.7727]},
-            'Matching': {"# Children expected 79" : [0.2729, 0.5055, 0.7539], "# Children ideal 79" : [0.2541, 0.5293, 0.7907]},
-            'IPW': {"# Children expected 79" : [-0.3282, 0.4447, 1.1937], "# Children ideal 79" : [-0.3558, 0.4459, 1.2902]}
+    dir3 = {'S-learner': {"# Children expected 79": [0.0809, 0.2139, 0.3663],
+                          "# Children ideal 79": [0.0908, 0.2440, 0.4487]},
+            'T-learner': {"# Children expected 79": [0.2689, 0.4791, 0.6818],
+                          "# Children ideal 79": [0.3304, 0.5551, 0.7727]},
+            'Matching': {"# Children expected 79": [0.2729, 0.5055, 0.7539],
+                         "# Children ideal 79": [0.2541, 0.5293, 0.7907]},
+            'IPW': {"# Children expected 79": [-0.3282, 0.4447, 1.1937],
+                    "# Children ideal 79": [-0.3558, 0.4459, 1.2902]}
             }
 
     plot_ATE_with_confidence_intervals(dir1,
@@ -133,4 +145,4 @@ if __name__ == '__main__':
                                        title2="Mature without children participants",
                                        title3="Mature with children participants",
                                        main_title="",
-                                       save_path="figures/ate_plot.png",)
+                                       save_path="figures/ate_plot.png", )
