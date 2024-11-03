@@ -1,5 +1,6 @@
-<h1 align="center"> Causal Inference Project - The Causal Effect of Opinions and Beliefs on Future Family Size </h1> 
-<h3 align="center">  Causal Inference 097400 – Spring 2024 </h3>
+<h1 align="center"> The Causal Effect of Opinions and Beliefs on Future Family Size </h1> 
+<h3 align="center">  Causal Inference Project </h3>
+<h3 align="center">  097400 – Spring 2024 </h3>
 <h5 align="center"> Technion – Israel Institute of Technology </h5>
 
   <p align="center">
